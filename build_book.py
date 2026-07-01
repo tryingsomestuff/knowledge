@@ -20,6 +20,11 @@ BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
 ITALIC_RE = re.compile(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)")
 CHAPTER_RE = re.compile(r"(\d+)")
 
+SISMIQUE_SOURCE_NAME = "Sismique podcast series on knowledge"
+SISMIQUE_PLAYLIST_URL = "https://www.youtube.com/watch?v=76fXe7klAHM&list=PL3DuAvtWLFbeguu0KLpLB3o9r3T8R_3tQ&index=7"
+YOUTUBE_CC_URL = "https://www.youtube.com/t/creative_commons"
+ADAPTATION_NOTICE = "Adaptation notice: selected French transcripts were translated to English, edited, and compiled by Vivien Clauzon."
+
 
 def slugify(text: str) -> str:
     slug = re.sub(r"[^a-zA-Z0-9]+", "-", text.strip().lower())
@@ -374,10 +379,17 @@ def build_pdf(
   story.append(Spacer(1, 12 * mm))
   story.append(
     Paragraph(
-      "Credits: source material inspired by the Sismique podcast on knowledge",
+      f"Source: {SISMIQUE_SOURCE_NAME} (Sismique) - <a href='{SISMIQUE_PLAYLIST_URL}'>YouTube playlist</a>",
       styles["Credits"],
     )
   )
+  story.append(
+    Paragraph(
+      f"License: YouTube Creative Commons (CC BY) - <a href='{YOUTUBE_CC_URL}'>{YOUTUBE_CC_URL}</a>",
+      styles["Credits"],
+    )
+  )
+  story.append(Paragraph(html.escape(ADAPTATION_NOTICE), styles["Credits"]))
   story.append(Paragraph("Compiled with GPT-5.4 &amp; Copilot", styles["Credits"]))
   story.append(Paragraph("Prepared &amp; curated by Vivien Clauzon", styles["Credits"]))
   story.append(PageBreak())
@@ -728,7 +740,9 @@ def render_book(
 
     <footer class="footer">
       <div>Generated from Markdown chapters with build_book.py</div>
-      <div>Credits: source material inspired by the <a href="https://www.sismique.fr/">Sismique podcast on knowledge</a></div>
+      <div>Source: {html.escape(SISMIQUE_SOURCE_NAME)} (Sismique) - <a href="{SISMIQUE_PLAYLIST_URL}">YouTube playlist</a></div>
+      <div>License: YouTube Creative Commons (CC BY) - <a href="{YOUTUBE_CC_URL}">{YOUTUBE_CC_URL}</a></div>
+      <div>{html.escape(ADAPTATION_NOTICE)}</div>
       <div>Compiled with GPT-5.4 &amp; Copilot</div>
       <div>Prepared & curated by Vivien Clauzon</div>
     </footer>
@@ -769,7 +783,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--author",
-        default="Prepared & curated by Vivien Clauzon from the Sismique podcast series on knowledge",
+        default="Prepared & curated by Vivien Clauzon",
         help="Author line for the cover.",
     )
     return parser.parse_args()
