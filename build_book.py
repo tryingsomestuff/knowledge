@@ -668,6 +668,21 @@ def render_book(
       background: rgba(255, 252, 247, 0.72);
     }}
 
+    .attribution-notice {{
+      margin: 0 72px 12px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 252, 247, 0.82);
+      font-size: 0.95rem;
+      color: var(--muted);
+    }}
+
+    .attribution-notice p {{
+      margin: 0.35em 0;
+      font-size: 0.95rem;
+    }}
+
     .toc-section {{
       list-style: disc;
     }}
@@ -715,6 +730,11 @@ def render_book(
         padding-left: 24px;
         padding-right: 24px;
       }}
+
+      .attribution-notice {{
+        margin-left: 24px;
+        margin-right: 24px;
+      }}
     }}
   </style>
 </head>
@@ -725,6 +745,13 @@ def render_book(
       <h1>{html.escape(title)}</h1>
       <p class="subtitle">{html.escape(subtitle)}</p>
       <div class="author">{html.escape(author)}</div>
+    </section>
+
+    <section class="attribution-notice">
+      <p><strong>Attribution notice</strong></p>
+      <p>Source: {html.escape(SISMIQUE_SOURCE_NAME)} (Sismique) - <a href="{SISMIQUE_PLAYLIST_URL}">YouTube playlist</a></p>
+      <p>License: YouTube Creative Commons (CC BY) - <a href="{YOUTUBE_CC_URL}">{YOUTUBE_CC_URL}</a></p>
+      <p>{html.escape(ADAPTATION_NOTICE)}</p>
     </section>
 
     <section class="toc">
@@ -739,7 +766,6 @@ def render_book(
     </section>
 
     <footer class="footer">
-      <div>Generated from Markdown chapters with build_book.py</div>
       <div>Source: {html.escape(SISMIQUE_SOURCE_NAME)} (Sismique) - <a href="{SISMIQUE_PLAYLIST_URL}">YouTube playlist</a></div>
       <div>License: YouTube Creative Commons (CC BY) - <a href="{YOUTUBE_CC_URL}">{YOUTUBE_CC_URL}</a></div>
       <div>{html.escape(ADAPTATION_NOTICE)}</div>
